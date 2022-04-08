@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Interfaces\Output;
+namespace App\Domain\Interfaces\Input;
 
 interface FileExpiredProcessorInterface
 {

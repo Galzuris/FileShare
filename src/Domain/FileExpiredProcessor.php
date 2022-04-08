@@ -3,9 +3,9 @@
 namespace App\Domain;
 
 use App\Domain\Entity\FileEntity;
-use App\Domain\Interfaces\Output\FileExpiredProcessorInterface;
-use App\Domain\Interfaces\Input\FileRepositoryInterface;
-use App\Domain\Interfaces\Input\FilesystemRepositoryInterface;
+use App\Domain\Interfaces\Input\FileExpiredProcessorInterface;
+use App\Domain\Interfaces\Output\FileRepositoryInterface;
+use App\Domain\Interfaces\Output\FilesystemRepositoryInterface;
 
 class FileExpiredProcessor implements FileExpiredProcessorInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Interfaces\Input;
+namespace App\Domain\Interfaces\Output;
 
 use App\Domain\Entity\FileEntity;
 
