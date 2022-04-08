@@ -1,0 +1,35 @@
+parameters:
+    file_lifetime: '%env(FILE_LIFETIME)%'
+    file_storage: '%env(resolve:FILE_STORAGE)%'
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    stored.repository:
+        class: App\Repository\StoredFileRepository
+        public: true
+        arguments:
+            $lifetime: '%file_lifetime%'
+
+    filesystem.repository:
+        class: App\Repository\FilesystemRepository
+        public: true
+
+    App\Repository\StoredFileRepository: '@stored.repository'
+    App\Domain\Interfaces\FileRepositoryInterface: '@stored.repository'
+    App\Domain\Interfaces\FilesystemRepositoryInterface: '@filesystem.repository'
+
+    App\Domain\Interfaces\FileUploadProcessorInterface:
+        class: App\Domain\FileUploadProcessor
+        arguments:
+            $storage: '%file_storage%'
+
