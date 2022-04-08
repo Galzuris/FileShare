@@ -14,10 +14,12 @@ class FileUploadProcessor implements FileUploadProcessorInterface
     private FileRepositoryInterface $repository;
     private FilesystemRepositoryInterface $filesystem;
     private string $storage;
+    private string $basePath;
 
-    public function __construct(string $storage, FileRepositoryInterface $repository, FilesystemRepositoryInterface $filesystem)
+    public function __construct(string $storage, string $basePath, FileRepositoryInterface $repository, FilesystemRepositoryInterface $filesystem)
     {
         $this->storage = $storage;
+        $this->basePath = $basePath;
         $this->repository = $repository;
         $this->filesystem = $filesystem;
     }
@@ -29,13 +31,14 @@ class FileUploadProcessor implements FileUploadProcessorInterface
 
         $info = pathinfo($request->getName());
         $name = $code . '.' . $info['extension'];
-        $path = $this->storage . $name;
-        $this->filesystem->move($request->getPath(), $path);
+        $storagePath = $this->storage . $name;
+        $fullPath = $this->basePath . $storagePath;
+        $this->filesystem->move($request->getPath(), $fullPath);
 
         $file = new FileEntity();
         $file->setCreatedTimestamp($time);
         $file->setCode($code);
-        $file->setPath($path);
+        $file->setPath($storagePath);
         $file->setName($request->getName());
         $this->repository->create($file);
 

@@ -1,6 +1,7 @@
 parameters:
     file_lifetime: '%env(FILE_LIFETIME)%'
     file_storage: '%env(resolve:FILE_STORAGE)%'
+    file_base_path: '%kernel.project_dir%/public/'
 
 services:
     _defaults:
@@ -36,11 +37,12 @@ services:
         class: App\Domain\FileUploadProcessor
         arguments:
             $storage: '%file_storage%'
+            $basePath: '%file_base_path%'
 
     App\Domain\Interfaces\Input\FileExpiredProcessorInterface:
         class: App\Domain\FileExpiredProcessor
         arguments:
-            $basePath: '%kernel.project_dir%'
+            $basePath: '%file_base_path%'
 
     # mapper
 
