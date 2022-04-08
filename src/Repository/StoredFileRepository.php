@@ -9,6 +9,7 @@ use App\Utils\TypeMapper;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @method StoredFile|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,16 +20,22 @@ use Doctrine\Persistence\ManagerRegistry;
 class StoredFileRepository extends ServiceEntityRepository implements FileRepositoryInterface
 {
     private int $offset;
+    private TypeMapper $mapper;
 
-    public function __construct(int $lifetime, ManagerRegistry $registry)
+    public function __construct(int $lifetime, ManagerRegistry $registry, TypeMapper $mapper)
     {
+        $this->mapper = $mapper;
         $this->offset = (new DateTime())->getTimestamp() - abs($lifetime);
         parent::__construct($registry, StoredFile::class);
     }
 
+    /**
+     * @param FileEntity $entity
+     * @throws Exception
+     */
     public function create(FileEntity $entity)
     {
-        $file = TypeMapper::FileToStored($entity);
+        $file = $this->mapper->convert($entity, StoredFile::class);
         $this->_em->persist($file);
         $this->_em->flush();
     }
@@ -42,6 +49,10 @@ class StoredFileRepository extends ServiceEntityRepository implements FileReposi
         }
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public function findExpired(): array
     {
         $list = $this
@@ -52,16 +63,22 @@ class StoredFileRepository extends ServiceEntityRepository implements FileReposi
             ->getResult()
         ;
         foreach ($list as $item) {
-            $result[] = TypeMapper::StoredToFile($item);
+            $result[] = $this->mapper->convert($item, FileEntity::class);
         }
         return $result ?? [];
     }
 
+    /**
+     * @param string $uid
+     * @return FileEntity|null|object
+     * @throws Exception
+     */
     public function findByUid(string $uid): ?FileEntity
     {
         $stored = $this->findOneBy(['uid' => $uid]);
         if ($stored) {
-            return TypeMapper::StoredToFile($stored);
+            $data = $this->mapper->convert($stored, FileEntity::class);
+            return $data;
         }
         return null;
     }

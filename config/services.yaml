@@ -25,6 +25,9 @@ services:
         public: true
 
     App\Repository\StoredFileRepository: '@stored.repository'
+
+    #domain
+
     App\Domain\Interfaces\FileRepositoryInterface: '@stored.repository'
     App\Domain\Interfaces\FilesystemRepositoryInterface: '@filesystem.repository'
 
@@ -38,3 +41,12 @@ services:
         arguments:
             $basePath: '%kernel.project_dir%'
 
+    # mapper
+
+    App\Utils\Mappers\:
+        resource: '../src/Utils/Mappers/'
+        tags: ['app.utils.mapper']
+
+    App\Utils\TypeMapper:
+        arguments:
+            - !tagged_iterator app.utils.mapper

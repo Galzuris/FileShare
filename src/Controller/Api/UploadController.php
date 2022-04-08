@@ -2,8 +2,10 @@
 
 namespace App\Controller\Api;
 
+use App\Domain\Entity\FileRequestEntity;
 use App\Domain\Interfaces\FileUploadProcessorInterface;
 use App\Utils\TypeMapper;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,9 +25,11 @@ class UploadController extends AbstractController
      * @Route("file", methods="POST", name="_upload")
      * @param Request $request
      * @param FileUploadProcessorInterface $uploadProcessor
+     * @param TypeMapper $mapper
      * @return JsonResponse
+     * @throws Exception
      */
-    function upload(Request $request, FileUploadProcessorInterface $uploadProcessor)
+    function upload(Request $request, FileUploadProcessorInterface $uploadProcessor, TypeMapper $mapper)
     {
         /** @var UploadedFile $file */
         $file = $request->files->get('file', null);
@@ -33,8 +37,9 @@ class UploadController extends AbstractController
             throw new BadRequestHttpException('file field required');
         }
 
-        $fileEntity = TypeMapper::UploadedToFileRequestEntity($file);
-        $result = $uploadProcessor->processUpload($fileEntity);
+        /** @var FileRequestEntity $fileRequest */
+        $fileRequest = $mapper->convert($file, FileRequestEntity::class);
+        $result = $uploadProcessor->processUpload($fileRequest);
 
         return $this->json([
             'code' => $result->getCode(),

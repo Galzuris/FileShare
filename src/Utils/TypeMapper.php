@@ -2,33 +2,35 @@
 
 namespace App\Utils;
 
-use App\Domain\Entity\FileEntity;
-use App\Domain\Entity\FileRequestEntity;
-use App\Entity\StoredFile;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Exception;
 
 class TypeMapper
 {
-    public static function UploadedToFileRequestEntity(UploadedFile $file): FileRequestEntity
+    private static iterable $strategies;
+
+    public function __construct(iterable $strategies)
     {
-        $entity = new FileRequestEntity();
-        $entity->setName($file->getClientOriginalName());
-        $entity->setPath($file->getRealPath());
-        return $entity;
+        self::$strategies = $strategies;
     }
 
-    public static function FileToStored(FileEntity $entity): StoredFile
-    {
-        $file = new StoredFile();
-        $file->setCreated($entity->getCreatedTimestamp());
-        $file->setUid($entity->getCode());
-        $file->setData(serialize($entity));
-        return $file;
-    }
+    /**
+     * @param $source
+     * @param string $targetClass
+     * @return object
+     * @throws Exception
+     */
+    public function convert($source, string $targetClass): object {
+        if (false == class_exists($targetClass)) {
+            throw new Exception('Class ' . $targetClass . ' not exists');
+        }
 
-    public static function StoredToFile(StoredFile $stored): FileEntity
-    {
-        $file = unserialize($stored->getData());
-        return $file;
+        $sourceClass = get_class($source);
+        foreach (self::$strategies as $strategy) {
+            if ($strategy->supports($sourceClass, $targetClass)) {
+                return $strategy->convert($source);
+            }
+        }
+
+        throw new Exception('Converter from ' . $sourceClass . ' to ' . $targetClass . ' not found');
     }
 }
