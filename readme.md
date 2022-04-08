@@ -75,7 +75,7 @@ GET {{host}}/api/file/:code
 ```json
 {
     "name": "original_file_name.txt",
-    "path": "{{host}}/f016fol8l",
+    "url": "{{host}}/f016fol8l",
     "timestamp": 1649397579
 }
 ```

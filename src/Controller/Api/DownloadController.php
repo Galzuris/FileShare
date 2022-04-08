@@ -31,7 +31,7 @@ class DownloadController extends AbstractController
 
         return $this->json([
             'name' => $entity->getName(),
-            'path' => $this->generateUrl('download', ['uid' => $uid], UrlGeneratorInterface::ABSOLUTE_URL),
+            'url' => $this->generateUrl('download', ['uid' => $uid], UrlGeneratorInterface::ABSOLUTE_URL),
             'timestamp' => $entity->getCreatedTimestamp(),
         ]);
     }
