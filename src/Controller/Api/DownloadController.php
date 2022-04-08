@@ -2,10 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Domain\Interfaces\FileRepositoryInterface;
+use App\Interfaces\FileEntityFindByUidInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,11 +19,10 @@ class DownloadController extends AbstractController
     /**
      * @Route("file/{uid}", methods={"GET"}, name="_download")
      * @param string $uid
-     * @param FileRepositoryInterface $repository
-     * @param Request $request
+     * @param FileEntityFindByUidInterface $repository
      * @return JsonResponse
      */
-    public function download(string $uid, FileRepositoryInterface $repository, Request $request)
+    public function download(string $uid, FileEntityFindByUidInterface $repository)
     {
         $entity = $repository->findByUid($uid);
         if (!$entity) {

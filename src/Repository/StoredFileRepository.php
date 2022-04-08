@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Domain\Entity\FileEntity;
 use App\Domain\Interfaces\FileRepositoryInterface;
 use App\Entity\StoredFile;
+use App\Interfaces\FileEntityFindByUidInterface;
 use App\Utils\TypeMapper;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -17,7 +18,7 @@ use Exception;
  * @method StoredFile[]    findAll()
  * @method StoredFile[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StoredFileRepository extends ServiceEntityRepository implements FileRepositoryInterface
+class StoredFileRepository extends ServiceEntityRepository implements FileRepositoryInterface, FileEntityFindByUidInterface
 {
     private int $offset;
     private TypeMapper $mapper;

@@ -25,6 +25,7 @@ services:
         public: true
 
     App\Repository\StoredFileRepository: '@stored.repository'
+    App\Interfaces\FileEntityFindByUidInterface: '@stored.repository'
 
     #domain
 
