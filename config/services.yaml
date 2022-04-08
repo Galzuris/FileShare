@@ -29,15 +29,15 @@ services:
 
     #domain
 
-    App\Domain\Interfaces\FileRepositoryInterface: '@stored.repository'
-    App\Domain\Interfaces\FilesystemRepositoryInterface: '@filesystem.repository'
+    App\Domain\Interfaces\Input\FileRepositoryInterface: '@stored.repository'
+    App\Domain\Interfaces\Input\FilesystemRepositoryInterface: '@filesystem.repository'
 
-    App\Domain\Interfaces\FileUploadProcessorInterface:
+    App\Domain\Interfaces\Output\FileUploadProcessorInterface:
         class: App\Domain\FileUploadProcessor
         arguments:
             $storage: '%file_storage%'
 
-    App\Domain\Interfaces\FileExpiredProcessorInterface:
+    App\Domain\Interfaces\Output\FileExpiredProcessorInterface:
         class: App\Domain\FileExpiredProcessor
         arguments:
             $basePath: '%kernel.project_dir%'

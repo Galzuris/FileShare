@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Domain\Interfaces\FileExpiredProcessorInterface;
+use App\Domain\Interfaces\Output\FileExpiredProcessorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

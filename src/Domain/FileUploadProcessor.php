@@ -4,9 +4,9 @@ namespace App\Domain;
 
 use App\Domain\Entity\FileEntity;
 use App\Domain\Entity\FileRequestEntity;
-use App\Domain\Interfaces\FileRepositoryInterface;
-use App\Domain\Interfaces\FilesystemRepositoryInterface;
-use App\Domain\Interfaces\FileUploadProcessorInterface;
+use App\Domain\Interfaces\Input\FileRepositoryInterface;
+use App\Domain\Interfaces\Input\FilesystemRepositoryInterface;
+use App\Domain\Interfaces\Output\FileUploadProcessorInterface;
 use DateTime;
 
 class FileUploadProcessor implements FileUploadProcessorInterface

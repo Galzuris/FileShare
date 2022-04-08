@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Domain\Entity\FileRequestEntity;
-use App\Domain\Interfaces\FileUploadProcessorInterface;
+use App\Domain\Interfaces\Output\FileUploadProcessorInterface;
 use App\Utils\TypeMapper;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

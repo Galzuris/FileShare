@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Domain\Interfaces\FilesystemRepositoryInterface;
+use App\Domain\Interfaces\Input\FilesystemRepositoryInterface;
 use Exception;
 
 class FilesystemRepository implements FilesystemRepositoryInterface

@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Domain\Entity\FileEntity;
-use App\Domain\Interfaces\FileRepositoryInterface;
+use App\Domain\Interfaces\Input\FileRepositoryInterface;
 use App\Entity\StoredFile;
 use App\Interfaces\FileEntityFindByUidInterface;
 use App\Utils\TypeMapper;
