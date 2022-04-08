@@ -26,7 +26,7 @@ class FileExpiredProcessor implements FileExpiredProcessorInterface
         $expired = $this->repository->findExpired();
         foreach ($expired as $file) {
             $path = $file->getPath();
-            $this->filesystem->remove($this->basePath . '/public/' . $path);
+            $this->filesystem->remove($this->basePath . $path);
             $this->repository->delete($file);
         }
     }
