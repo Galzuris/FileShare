@@ -29,7 +29,13 @@ class FilesystemRepository implements FilesystemRepositoryInterface
 
     public function remove(string $file)
     {
-        unlink($file);
+        $slash = str_starts_with($file, '/');
+        $point = str_starts_with($file, '.');
+        if ($slash || $point) {
+            unlink($file);
+        } else {
+            unlink('./' . $file);
+        }
     }
 
     public function exists(string $file): bool

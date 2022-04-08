@@ -33,3 +33,8 @@ services:
         arguments:
             $storage: '%file_storage%'
 
+    App\Domain\Interfaces\FileExpiredProcessorInterface:
+        class: App\Domain\FileExpiredProcessor
+        arguments:
+            $basePath: '%kernel.project_dir%'
+
