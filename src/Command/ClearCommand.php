@@ -10,8 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ClearCommand extends Command
 {
-    protected static $defaultName = 'app:clear';
-    protected static $defaultDescription = 'Очистка устаревших файлов';
+    protected static string $defaultName = 'app:clear';
+    protected static string $defaultDescription = 'Очистка устаревших файлов';
 
     private FileExpiredProcessorInterface $expiredProcessor;
 
