@@ -7,6 +7,10 @@ use App\Entity\StoredFile;
 use App\Tests\Utils\TypeMapperTestBase;
 use Throwable;
 
+/**
+ * @covers \App\Utils\Mappers\StoredToFileEntity
+ * @package App\Tests\Utils\Mappers
+ */
 class StoredToFileEntityTest extends TypeMapperTestBase
 {
     public function testStoredToFileEntityTest()

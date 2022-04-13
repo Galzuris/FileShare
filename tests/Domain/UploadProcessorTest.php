@@ -8,6 +8,10 @@ use App\Domain\Interfaces\Output\FileRepositoryInterface;
 use App\Interfaces\FileEntityFindByUidInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @covers \App\Domain\FileUploadProcessor
+ * @package App\Tests\Utils\Mappers
+ */
 class UploadProcessorTest extends KernelTestCase
 {
     private const TempFileName = 'test.txt';

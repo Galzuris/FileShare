@@ -7,6 +7,10 @@ use App\Tests\Utils\TypeMapperTestBase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 
+/**
+ * @covers \App\Utils\Mappers\UploadedFileToRequestEntity
+ * @package App\Tests\Utils\Mappers
+ */
 class UploadedFileToRequestEntityTest extends TypeMapperTestBase
 {
     public function testUploadedFileToRequestEntityTest()
