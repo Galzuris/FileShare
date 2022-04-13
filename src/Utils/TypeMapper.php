@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Exception\TypeMapper\ClassNotFoundException;
+use App\Exception\TypeMapper\ConverterNotFoundException;
 use Exception;
 
 class TypeMapper
@@ -21,7 +23,7 @@ class TypeMapper
      */
     public function convert($source, string $targetClass): object {
         if (false == class_exists($targetClass)) {
-            throw new Exception('Class ' . $targetClass . ' not exists');
+            throw new ClassNotFoundException('Class ' . $targetClass . ' not exists');
         }
 
         $sourceClass = get_class($source);
@@ -31,6 +33,6 @@ class TypeMapper
             }
         }
 
-        throw new Exception('Converter from ' . $sourceClass . ' to ' . $targetClass . ' not found');
+        throw new ConverterNotFoundException('Converter from ' . $sourceClass . ' to ' . $targetClass . ' not found');
     }
 }
